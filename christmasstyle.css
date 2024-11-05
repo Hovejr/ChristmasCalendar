@@ -1,0 +1,187 @@
+﻿.calendar {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+}
+
+
+
+.title {
+    color: #9c0000;
+    text-align: center;
+    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+    font-size: 60px;
+    font-weight: 400;
+    align-self: center;
+    position: relative;
+    margin-left: -18px;
+    width: 1024px;
+    max-width: 1021px;
+}
+
+.img {
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+}
+
+.box-wrapper {
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0);
+    position: relative;
+    margin: 1vw;
+    border: 4px dashed #fff;
+    width:20%;
+}
+
+/* Add a media query for when the aspect ratio of the page is such that width is greater than height */
+@media screen and (orientation: landscape) {
+    .box-wrapper {
+        width: 13%; /* This makes 6 boxes fit in a row */
+    }
+}
+
+.background {
+    gap: 20px;
+    display: flex;
+}
+
+.column {
+    display: flex;
+    margin-left: 15vw;
+    margin-right: 15vw;
+}
+
+.box {
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0);
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+    padding: 1vw;
+    margin: 1vw;
+    flex-direction: column;
+    color: red;
+    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+    font-size: 2em;
+    height: 7vh;
+}
+
+@media screen and (orientation: landscape) {
+    .box {
+        height: 9vh;
+    }
+}
+
+    .box.opened {
+        transform: perspective(600px) rotateY(90deg);
+        }
+
+.footer {
+    position: fixed;
+    left: 5vw;
+    bottom: 2vh;
+    width: 90vw;
+    background-color: #D32F2F; /* Festive red */
+    color: white;
+    text-align: center;
+    padding-bottom: 0.2vh; /* Reduced padding */
+    padding-left: 2vw;
+    padding-right: 2vw;
+    padding-top: 0.3vh;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 35px;
+}
+
+.innerfooter {
+    display: block;
+    text-align: center;
+    gap: 20px;
+}
+
+.date {
+    font-size: 1.2em;
+    font-weight: 700;
+    flex: 1;
+    text-align: center;
+    margin-bottom:1vh
+}
+
+.fact-box {
+    
+    color: white;
+    padding: 10px;
+    margin-left: 10px;
+    border-radius: 5px;
+    flex: 3;
+    font-size: 1em;
+}
+
+
+
+.box-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* This centers the boxes in the container */
+    margin-left: 15vw;
+    margin-right: 15vw;
+}
+
+
+.snow_wrap {
+    width: 100%;
+    background: url("bg.png");
+    background-size: cover;
+    background-position: center bottom;
+    overflow: hidden;
+}
+
+.snow, .snow:after, .snow::before {
+    content: '';
+    position: absolute;
+    top: -650px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: radial-gradient(4px 4px at 100px 50px,#fff,transparent), radial-gradient(6px 6px at 200px 150px, #fff,transparent), radial-gradient(3px 3px at 300px 250px,#fff,transparent), radial-gradient(4px 4px at 400px 350px,#fff,transparent), radial-gradient(6px 6px at 500px 100px,#fff,transparent), radial-gradient(3px 3px at 50px 200px,#fff,transparent), radial-gradient(4px 4px at 150px 300px,#fff,transparent), radial-gradient(6px 6px at 250px 400px,#fff,transparent), radial-gradient(3px 3px at 350px 500px,#fff,transparent), radial-gradient(4px 4px at 550px 550px,#fff,transparent);
+    background-size: 650px 650px;
+    animation: SnowAnim 3s linear infinite;
+}
+
+    .snow:after {
+        margin-left: -250px;
+        opacity: 0.5;
+        filter: blur(2px);
+        animation-direction: reverse;
+        animation-duration: 6s;
+    }
+
+    .snow::before {
+        margin-left: -350px;
+        opacity: 0.7;
+        filter: blur(1px);
+        animation-direction: reverse;
+        animation-duration: 9s;
+    }
+
+@keyframes SnowAnim {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(650px);
+    }
+}

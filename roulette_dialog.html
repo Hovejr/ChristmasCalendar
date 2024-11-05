@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="christmasstyle.css">
-    <link rel="stylesheet" href="site.css"> <!-- Your existing styles -->
     <link href="https://fonts.googleapis.com/css?family=Mountains+of+Christmas&display=swap" rel="stylesheet">
-    <title>Julekalender</title>
+    <link rel="stylesheet" href="fireworks.css"> <!-- Make sure to have this CSS file -->
+    <link rel="stylesheet" href="site.css"> <!-- Include your existing site.css if needed -->
+    <link rel="stylesheet" href="christmasstyle.css"> <!-- Include your existing christmasstyle.css -->
+    <title>Roulette Dialog</title>
     <style>
         .dialog {
             position: fixed;
@@ -15,7 +16,7 @@
             right: 0;
             bottom: 0;
             background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
-            z-index: 1000; /* Ensure it appears above other elements */
+            z-index: 1000;
             display: none; /* Hidden by default */
         }
 
@@ -83,35 +84,20 @@
     </style>
 </head>
 <body>
-    <div id="app">
-        <div class="calendar" style="background-image: url('path/to/team/theme/image.jpg');">
-            <div class="snow_wrap">
-                <div class="snow"></div>
+    <div id="dialog" class="dialog">
+        <div class="dialog-content">
+            <h2>Vinneren er:</h2>
+            <h1 id="winner-name">John Doe</h1> <!-- Placeholder for winner name -->
+            <div class="winner-image-container">
+                <img src="path/to/winner/image.jpg" alt="Winner's Image" class="winner-image" id="winner-image" /> <!-- Placeholder for image -->
             </div>
-            <div class="title">Julekalender <span id="team-name">Team Name</span></div>
-            <div class="box-container" id="box-container"></div>
-            <div class="footer">
-                <div class="innerfooter">
-                    <div class="date" id="current-date"></div>
-                    <div class="fact-box" id="fact-box">Loading facts...</div>
-                </div>
-            </div>
-        </div>
-        <div id="dialog" class="dialog">
-            <div class="dialog-content">
-                <h2>Vinneren er:</h2>
-                <h1 id="winner-name">John Doe</h1>
-                <div class="winner-image-container">
-                    <img src="path/to/winner/image.jpg" alt="Winner's Image" class="winner-image" id="winner-image" />
-                </div>
-                <div class="button-container">
-                    <button id="choose-winner" class="btn-winner">Velg vinner</button>
-                    <button id="redraw" class="btn-redraw">Trekk på nytt</button>
-                </div>
+            <div class="button-container">
+                <button id="choose-winner" class="btn-winner">Velg vinner</button>
+                <button id="redraw" class="btn-redraw">Trekk på nytt</button>
             </div>
         </div>
     </div>
-    
+
     <script src="script.js"></script>
 </body>
 </html>

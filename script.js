@@ -1,77 +1,70 @@
-// Wait for the DOM to fully load
-document.addEventListener('DOMContentLoaded', () => {
-    const calendar = document.querySelector('.calendar');
+document.addEventListener('DOMContentLoaded', function () {
+    const boxContainer = document.getElementById('box-container');
+    const currentDate = document.getElementById('current-date');
+    const factBox = document.getElementById('fact-box');
     const dialog = document.getElementById('dialog');
-    const chooseWinnerButton = document.getElementById('chooseWinner');
-    const redrawButton = document.getElementById('redraw');
-    let currentDoorElement; // To keep track of the currently opened door
+    const winnerName = document.getElementById('winner-name');
+    const winnerImage = document.getElementById('winner-image');
 
-    // Seed for random number generation
-    const seed = 12345; // Change this to any number you want to use as a seed
-    let seedRandom = (function(seed) {
-        return function() {
-            seed = (seed * 9301 + 49297) % 233280;
-            return seed / 233280;
-        };
-    })(seed);
+    const teamId = 1; // Example team ID
+    const openedBoxes = [];
+    const randomizedNumbers = [...Array(24).keys()].map(i => i + 1); // Random numbers from 1 to 24
 
-    // Create an array of doors with their corresponding content
-    let doorsWithContent = Array.from({ length: 24 }, (_, i) => ({
-        door: i + 1,
-        content: `Content for day ${i + 1}`
-    }));
+    randomizedNumbers.sort(() => Math.random() - 0.5); // Shuffle numbers
 
-    // Shuffle the doorsWithContent array using the Fisher-Yates algorithm with seeded random
-    for (let i = doorsWithContent.length - 1; i > 0; i--) {
-        const j = Math.floor(seedRandom() * (i + 1));
-        [doorsWithContent[i], doorsWithContent[j]] = [doorsWithContent[j], doorsWithContent[i]];
+    // Initialize current date
+    currentDate.textContent = `I dag er det: ${new Date().toLocaleDateString('nb-NO', { day: 'numeric', month: 'long' })}`;
+
+    // Create boxes
+    randomizedNumbers.forEach(boxNumber => {
+        const box = document.createElement('div');
+        box.className = 'box-wrapper';
+        box.innerHTML = `
+            <div class="box" onclick="boxClicked(${boxNumber})">${boxNumber}</div>
+        `;
+        boxContainer.appendChild(box);
+    });
+
+    // Fetch and display facts (simulated)
+    fetchFact();
+
+    // Function to fetch facts (this is just a simulated function)
+    function fetchFact() {
+        setTimeout(() => {
+            factBox.textContent = "This is an interesting fact!";
+        }, 2000);
     }
 
-    // Loop through the shuffled array to create the doors
-    doorsWithContent.forEach(({ door, content }) => {
-        const doorElement = document.createElement('div');
-        doorElement.classList.add('door');
+    // Function to handle box clicks
+    window.boxClicked = function(boxNumber) {
+        if (!openedBoxes.includes(boxNumber)) {
+            openedBoxes.push(boxNumber);
+            // Simulate fetching a winner
+            const winner = { name: `Person ${boxNumber}`, image: 'path/to/winner/image.jpg' }; // Placeholder data
+            showWinner(winner);
+        }
+    };
 
-        const doorInner = document.createElement('div');
-        doorInner.classList.add('door-inner');
+    // Function to show the winner
+    function showWinner(winner) {
+        winnerName.textContent = winner.name;
+        winnerImage.src = winner.image; // Set the winner's image
+        dialog.style.display = 'block'; // Show the dialog
+    }
 
-        const doorFront = document.createElement('div');
-        doorFront.classList.add('door-front');
-        doorFront.textContent = door; // Display the fixed day number
+    // Function to close the dialog
+    window.closeDialog = function() {
+        dialog.style.display = 'none'; // Hide the dialog
+    };
 
-        const doorBack = document.createElement('div');
-        doorBack.classList.add('door-back');
-        doorBack.textContent = content; // Display corresponding content from the shuffled array
-
-        doorInner.appendChild(doorFront);
-        doorInner.appendChild(doorBack);
-        doorElement.appendChild(doorInner);
-        calendar.appendChild(doorElement);
-
-        doorElement.addEventListener('click', () => {
-            if (!doorElement.classList.contains('open')) {
-                doorElement.classList.toggle('open');
-                dialog.style.display = 'block'; // Show dialog when the door opens
-                currentDoorElement = doorElement; // Keep track of the currently opened door
-            }
-        });
+    // Event listeners for buttons in the dialog
+    document.getElementById('choose-winner').addEventListener('click', function () {
+        alert("Winner chosen!"); // Placeholder for your logic
+        closeDialog();
     });
 
-    // Choose Winner functionality
-    chooseWinnerButton.addEventListener('click', () => {
-        if (currentDoorElement) {
-            currentDoorElement.style.backgroundColor = '#FFD700'; // Change background to gold for the winning door
-            currentDoorElement.classList.add('winner'); // Optionally add a class for styling
-        }
-        dialog.style.display = 'none'; // Hide the dialog
-    });
-
-    // Redraw functionality
-    redrawButton.addEventListener('click', () => {
-        dialog.style.display = 'none'; // Hide the dialog
-        if (currentDoorElement) {
-            currentDoorElement.classList.remove('open'); // Close the door visually
-            currentDoorElement.style.backgroundColor = '#ff0000'; // Reset background color for the door
-        }
+    document.getElementById('redraw').addEventListener('click', function () {
+        alert("Redraw initiated!"); // Placeholder for your logic
+        closeDialog();
     });
 });
