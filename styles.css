@@ -1,0 +1,91 @@
+/* styles.css */
+@import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas&display=swap'); /* Import festive font */
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #2e7d32; /* Festive green background */
+  font-family: 'Mountains of Christmas', cursive; /* Change to Mountains of Christmas font */
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 10px;
+  width: 80vw;
+  max-width: 1200px;
+}
+
+.door {
+  position: relative;
+  width: 100%;
+  padding-top: 100%; /* Makes each door a square */
+  perspective: 1000px; /* Enable 3D perspective */
+}
+
+.door-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s ease; /* Smooth transition */
+  transform-origin: left; /* Set transform origin to the left edge */
+}
+
+.door-front, .door-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* Prevents back face from showing */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  color: white;
+  border-radius: 10px;
+}
+
+.door-front {
+  background-color: #ff0000; /* Bright red front */
+  border: 2px solid #ffffff; /* White border */
+}
+
+.door-back {
+  background-color: #28a745; /* Festive green back */
+  transform: rotateY(-90deg); /* Position the back at a right angle to the left */
+}
+
+.door.open .door-inner {
+  transform: rotateY(-90deg); /* Rotate the inner door to open outward */
+}
+
+/* Additional styles for a festive touch */
+.door {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
+}
+
+.door-front::after {
+  content: '🎄'; /* Christmas tree icon on front */
+  font-size: 0.5em; /* Smaller icon size */
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.door-back::after {
+  content: '🎁'; /* Gift icon on back */
+  font-size: 0.5em; /* Smaller icon size */
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+/* Hide the door after it is opened */
+.door.hidden {
+  display: none; /* Completely hide the door element */
+}
