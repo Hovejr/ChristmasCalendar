@@ -13,18 +13,22 @@ body {
 
 .calendar {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  gap: 10px;
-  width: 80vw;
-  max-width: 1200px;
+  grid-template-columns: repeat(6, 1fr); /* 6 columns for 24 doors */
+  grid-template-rows: repeat(4, 1fr); /* 4 rows for the doors */
+  gap: 10px; /* Space between doors */
+  width: 80vw; /* Width of the calendar */
+  max-width: 1200px; /* Maximum width */
 }
 
 .door {
   position: relative;
   width: 100%;
   padding-top: 100%; /* Makes each door a square */
+  background-color: #ff0000; /* Red background for the doors */
+  border: 2px solid #ffffff; /* White border for contrast */
+  border-radius: 10px; /* Rounded corners */
   perspective: 1000px; /* Enable 3D perspective */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
 }
 
 .door-inner {
@@ -46,13 +50,12 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 2em;
-  color: white;
-  border-radius: 10px;
+  color: white; /* White text for visibility */
+  border-radius: 10px; /* Rounded corners */
 }
 
 .door-front {
-  background-color: #ff0000; /* Bright red front */
-  border: 2px solid #ffffff; /* White border */
+  background-color: #ff0000; /* Red front background */
 }
 
 .door-back {
@@ -64,28 +67,39 @@ body {
   transform: rotateY(-90deg); /* Rotate the inner door to open outward */
 }
 
-/* Additional styles for a festive touch */
-.door {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
-}
-
-.door-front::after {
-  content: '🎄'; /* Christmas tree icon on front */
-  font-size: 0.5em; /* Smaller icon size */
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-}
-
-.door-back::after {
-  content: '🎁'; /* Gift icon on back */
-  font-size: 0.5em; /* Smaller icon size */
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-}
-
 /* Hide the door after it is opened */
 .door.hidden {
   display: none; /* Completely hide the door element */
+}
+
+#dialog {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff; /* White background for the dialog */
+    border: 2px solid #007bff; /* Festive border color */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000; /* Ensure it appears above other elements */
+}
+
+.dialog-content {
+    text-align: center; /* Center text within the dialog */
+}
+
+#chooseWinner, #redraw {
+    background-color: #007bff; /* Button color */
+    color: white; /* Text color */
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px; /* Margin between buttons */
+}
+
+#chooseWinner:hover, #redraw:hover {
+    background-color: #0056b3; /* Darker button color on hover */
 }
