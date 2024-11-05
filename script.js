@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!openedBoxes.includes(boxNumber)) {
             openedBoxes.push(boxNumber);
             // Simulate fetching a winner
-            const winner = { name: `Person ${boxNumber}`, image: 'path/to/winner/image.jpg' }; // Placeholder data
+            const winner = { name: `Person ${boxNumber}`, image: '3.jpg' }; // Placeholder data
             showWinner(winner);
         }
     };
@@ -59,12 +59,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Event listeners for buttons in the dialog
     document.getElementById('choose-winner').addEventListener('click', function () {
-        alert("Winner chosen!"); // Placeholder for your logic
         closeDialog();
     });
 
     document.getElementById('redraw').addEventListener('click', function () {
-        alert("Redraw initiated!"); // Placeholder for your logic
         closeDialog();
     });
 });
