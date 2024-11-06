@@ -3,88 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="roulettedialog.css">
     <link rel="stylesheet" href="christmasstyle.css">
     <link rel="stylesheet" href="site.css"> <!-- Your existing styles -->
     <link href="https://fonts.googleapis.com/css?family=Mountains+of+Christmas&display=swap" rel="stylesheet">
     <title>Julekalender</title>
-    <style>
-        .dialog {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
-            z-index: 1000; /* Ensure it appears above other elements */
-            display: none; /* Hidden by default */
-        }
-
-        .dialog-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #f7e6e6; /* Soft Christmas red */
-            padding: 20px;
-            border: 2px solid #008000; /* Gold border */
-            box-shadow: 0 0 10px #008000; /* Soft glow effect */
-            z-index: 1001;
-            font-family: 'Mountains of Christmas', cursive; /* Festive font */
-            text-align: center;
-        }
-
-        .winner-image-container {
-            margin-bottom: 20px; /* Space between image and buttons */
-            text-align: center; /* Center the image */
-        }
-
-        .winner-image {
-            max-width: 20vw; /* Max width of 20% of the viewport width */
-            border-radius: 50%; /* Circular image */
-        }
-
-        .button-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Center buttons below the image */
-        }
-
-        button {
-            margin-top: 10px;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            border-radius: 5px; /* Rounded corners */
-            display: none; /* Initially hidden */
-        }
-
-        .btn-winner {
-            background-color: #008000; /* Christmas green */
-            color: white;
-        }
-
-        .btn-winner:hover {
-            background-color: #005700; /* Darker green on hover */
-        }
-
-        .btn-redraw {
-            background-color: #bb2525; /* Christmas red */
-            color: white;
-        }
-
-        .btn-redraw:hover {
-            background-color: #7b1a1a; /* Darker red on hover */
-        }
-
-        h2 {
-            margin-bottom: 20px;
-            color: #005700; /* Christmas green */
-        }
-    </style>
 </head>
 <body>
     <div id="app">
+        <a href="adduser.html" class="add-user-link">Add User</a> <!-- Link to add user -->
         <div class="calendar" style="background-image: url('bg.png');">
             <div class="snow_wrap">
                 <div class="snow"></div>
@@ -112,7 +39,13 @@
             </div>
         </div>
     </div>
-    
+
+    <!-- JS -->
     <script src="script.js"></script>
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-app-compat.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore-compat.js"></script>
+
 </body>
 </html>

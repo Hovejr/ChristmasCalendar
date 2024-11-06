@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Mountains+of+Christmas&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="adduser.css">
+    <title>Add User</title>
+</head>
+<body>
+    <div class="container">
+        <h1 id="form-title">Add User</h1>
+        <form id="user-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
+
+            <label for="image">Upload Image:</label>
+            <input type="file" id="image" accept="image/*" required>
+
+            <button type="submit" id="submit-button">Add User</button>
+        </form>
+
+        <div id="message"></div>
+
+        <div id="user-list">
+            <h2>Users</h2>
+            <ul id="users"></ul>
+        </div>
+
+        <!-- Back button to go to index.html -->
+        <a href="index.html" class="back-button">Back</a>
+    </div>
+
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-app-compat.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore-compat.js"></script>
+    <!-- JS -->
+    <script src="adduser.js" defer></script>
+
+</body>
+</html>

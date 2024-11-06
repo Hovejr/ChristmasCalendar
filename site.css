@@ -74,3 +74,25 @@ a, .btn-link {
 .modal-shown {
     display: block; /* Or flex, etc., depending on your styling */
 }
+
+.calendar {
+    position: relative; /* Ensure the calendar has a positioning context */
+    z-index: 1; /* Set lower than the button */
+}
+
+.add-user-link {
+    position: absolute;
+    top: 20px; /* Adjust as needed */
+    right: 20px; /* Adjust as needed */
+    font-size: 1.2em; /* Font size */
+    color: #fff; /* Change to your preferred color */
+    text-decoration: none; /* Remove underline */
+    background-color: #008CBA; /* Button-like appearance */
+    padding: 10px 15px; /* Button padding */
+    border-radius: 5px; /* Rounded corners */
+    z-index: 10; /* Ensure it appears above other elements */
+}
+
+.add-user-link:hover {
+    background-color: #005f73; /* Darker shade on hover */
+}
