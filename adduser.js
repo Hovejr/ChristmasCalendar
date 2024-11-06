@@ -51,12 +51,19 @@ async function displayUsers() {
     snapshot.forEach((doc) => {
         const user = doc.data();
         const listItem = document.createElement('li');
+        listItem.style.display = 'flex'; // Use flexbox for alignment
+        listItem.style.alignItems = 'center'; // Center items vertically
+        listItem.style.justifyContent = 'space-between'; // Space between content and buttons
+
         listItem.innerHTML = `
-            <strong>${user.name}</strong> - 
-            <img src="${user.image}" alt="${user.name}" style="width: 50px; height: 50px; border-radius: 50%;"/> - 
-            ${user.dayWon}
-            <button onclick="editUser('${doc.id}', '${user.name}', '${user.image}')">Edit</button>
-            <button onclick="deleteUser('${doc.id}')">Delete</button>
+            <div style="display: flex; align-items: center;">
+                <img src="${user.image}" alt="${user.name}" class="winner-image" />
+                <strong style="margin-left: 10px;">${user.name}</strong> <!-- Added margin for spacing -->
+            </div>
+            <div>
+                <button onclick="editUser('${doc.id}', '${user.name}', '${user.image}')">Edit</button>
+                <button onclick="deleteUser('${doc.id}')">Delete</button>
+            </div>
         `;
         userList.appendChild(listItem);
     });

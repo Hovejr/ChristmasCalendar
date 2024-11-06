@@ -32,13 +32,14 @@ input {
 }
 
 button {
-    width: 100%;
-    padding: 10px;
+    width: auto; /* Set width to auto for slimmer buttons */
+    padding: 5px 10px; /* Adjust padding for slimmer appearance */
     background-color: #28a745;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 0.9em; /* Slightly smaller font size */
 }
 
 button:hover {
@@ -48,6 +49,29 @@ button:hover {
 #message {
     text-align: center;
     margin-top: 15px;
+}
+
+#user-list {
+    margin-top: 20px;
+}
+
+#users {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove default padding */
+}
+
+#users li {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    justify-content: space-between; /* Space between content and buttons */
+    padding: 10px 0; /* Padding for each list item */
+    border-bottom: 1px solid #ddd; /* Optional: border between users */
+}
+
+.winner-image {
+    width: 50px; /* Set width for square images */
+    height: 50px; /* Set height to match width */
+    border-radius: 0; /* Remove border-radius for square images */
 }
 
 .back-button {
