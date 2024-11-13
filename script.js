@@ -1,19 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const firebaseConfig = {
-      apiKey: "AIzaSyD4Fa9e7yzZM1QxsBkXhW_Si-Btug7Jk0g",
-      authDomain: "christmascalendar-947a4.firebaseapp.com",
-      projectId: "christmascalendar-947a4",
-      storageBucket: "christmascalendar-947a4.firebasestorage.app",
-      messagingSenderId: "237737049916",
-      appId: "1:237737049916:web:30f73710bdebf16279e839"
-    };
-
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    let users = [];
-
     const boxContainer = document.getElementById('box-container');
     const dialog = document.getElementById('dialog');
     const winnerName = document.getElementById('winner-name');
@@ -21,63 +6,78 @@ document.addEventListener('DOMContentLoaded', function () {
     const chooseWinnerButton = document.getElementById('choose-winner');
     const redrawButton = document.getElementById('redraw');
 
+    const images = [
+        'img/1.jpg',
+        'img/2.jpg',
+        'img/3.jpg'
+    ];
+
+    const teamId = 1; // Example team ID
     const openedBoxes = [];
     const randomizedNumbers = [...Array(24).keys()].map(i => i + 1); // Random numbers from 1 to 24
 
     randomizedNumbers.sort(() => Math.random() - 0.5); // Shuffle numbers
 
-    // Create boxes dynamically
+    
+
+    // Create boxes
     randomizedNumbers.forEach(boxNumber => {
+        const boxWrapper = document.createElement('div');
+        boxWrapper.className = 'box-wrapper';
+
         const box = document.createElement('div');
-        box.className = 'box-wrapper';
-        box.innerHTML = `
-            <div class="box" onclick="boxClicked(${boxNumber})">${boxNumber}</div>
-        `;
-        boxContainer.appendChild(box);
+        box.className = 'box';
+        box.textContent = boxNumber;
+        boxWrapper.appendChild(box);
+
+        // Click event for the box
+        box.addEventListener('click', () => boxClicked(box, boxNumber));
+
+        boxContainer.appendChild(boxWrapper);
     });
 
+
     // Function to handle box clicks
-    window.boxClicked = function(boxNumber) {
+    window.boxClicked = function (box, boxNumber) {
         if (!openedBoxes.includes(boxNumber)) {
             openedBoxes.push(boxNumber);
-            // Simulate flipping between users' images
-            flipUsersImages();
+            box.classList.add('opened');
+            const boxWrapper = box.parentElement; // Get the parent element (box-wrapper)
+            rotateImages(boxWrapper); // Rotate images in the box-wrapper
+
+            setTimeout(() => {
+                const winner = { name: `Person ${boxNumber}`, image: 'img/3.jpg' }; // Mock winner data
+                showWinner(winner);
+            }, 3000);
         }
     };
 
-    // Function to flip between users' images
-    function flipUsersImages() {
-        winnerName.textContent = "Spinning...";
-        winnerImage.src = ''; // Clear the image initially
+// Function to rotate images in the box-wrapper
+function rotateImages(boxWrapper) {
+    let imageIndex = 0;
+    const rotationInterval = setInterval(() => {
+        boxWrapper.style.backgroundImage = `url(${images[imageIndex % images.length]})`;
+        imageIndex++;
+    }, 300);
 
-        let spinCount = 0;
-        const images = users.map(user => user.image); // Extract all user images
+    // Stop image rotation after 3 seconds
+    setTimeout(() => clearInterval(rotationInterval), 3000);
+}
 
-        const spinInterval = setInterval(() => {
-            winnerImage.src = images[spinCount % images.length]; // Show the next image
-            spinCount++;
-        }, 300); // Change image every 300 ms
 
-        // After 3 seconds, stop the flip and display the final winner
-        setTimeout(() => {
-            clearInterval(spinInterval); // Stop the spinning
-
-            // Choose a random winner from users
-            const winnerIndex = Math.floor(Math.random() * users.length);
-            const winner = users[winnerIndex];
-
-            winnerName.textContent = winner.name; // Set the winner name
+    // Function to show the winner with a spinning effect
+    function showWinner(winner) {
+        winnerName.textContent = winner.name; // Set the winner name
             winnerImage.src = winner.image; // Set the winner's image
-            chooseWinnerButton.style.display = 'block'; // Show the buttons
-            redrawButton.style.display = 'block';
+            chooseWinnerButton.style.display = 'block'; // Show the choose winner button
+            redrawButton.style.display = 'block'; // Show the redraw button
             dialog.style.display = 'block'; // Show the dialog
-        }, 3000); // Spin for 3 seconds
     }
 
-    // Close the dialog
+    // Function to close the dialog
     window.closeDialog = function() {
-        dialog.style.display = 'none';
-        chooseWinnerButton.style.display = 'none';
+        dialog.style.display = 'none'; // Hide the dialog
+        chooseWinnerButton.style.display = 'none'; // Hide buttons again
         redrawButton.style.display = 'none';
     };
 
@@ -91,32 +91,4 @@ document.addEventListener('DOMContentLoaded', function () {
         alert("Redraw initiated!"); // Placeholder for your logic
         closeDialog();
     });
-
-    // Function to fetch and display users
-    // Function to fetch users and store them in the local variable
-    async function fetchUsers() {
-        try {
-            const snapshot = await db.collection("users").get();
-            users = []; // Clear previous data in case of re-fetching
-
-            snapshot.forEach((doc) => {
-                const user = doc.data();
-                users.push({
-                    id: doc.id,
-                    name: user.name,
-                    image: user.image,
-                    dayWon: user.dayWon
-                });
-            });
-
-            console.log("Users fetched:", users); // You can log the users to check them
-        } catch (error) {
-            console.error("Error fetching users: ", error);
-        }
-    }
-
-    // Call the function to fetch users when the page loads
-    window.onload = function() {
-        fetchUsers();
-    };
 });
