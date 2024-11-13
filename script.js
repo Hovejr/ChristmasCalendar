@@ -26,15 +26,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     randomizedNumbers.sort(() => Math.random() - 0.5); // Shuffle numbers
 
-    // Create boxes dynamically with user images
+    // Create boxes dynamically
     randomizedNumbers.forEach(boxNumber => {
         const box = document.createElement('div');
-        const randomUser = users[Math.floor(Math.random() * users.length)]; // Pick a random user for the box
-
         box.className = 'box-wrapper';
         box.innerHTML = `
             <div class="box" onclick="boxClicked(${boxNumber})">${boxNumber}</div>
-            <img src="${randomUser.image}" alt="User's Image" class="box-image" />
         `;
         boxContainer.appendChild(box);
     });
@@ -43,31 +40,32 @@ document.addEventListener('DOMContentLoaded', function () {
     window.boxClicked = function(boxNumber) {
         if (!openedBoxes.includes(boxNumber)) {
             openedBoxes.push(boxNumber);
-            // Simulate fetching a winner and spin between three images
-            const winner = { name: `Person ${boxNumber}`, image: 'img/3.jpg' }; // Placeholder data
-            showWinner(winner);
+            // Simulate flipping between users' images
+            flipUsersImages();
         }
     };
 
-    // Function to show the winner with a spinning effect
-    function showWinner(winner) {
+    // Function to flip between users' images
+    function flipUsersImages() {
         winnerName.textContent = "Spinning...";
         winnerImage.src = ''; // Clear the image initially
 
-        const images = [
-            'img/1.jpg',
-            'img/2.jpg',
-            'img/3.jpg'
-        ];
         let spinCount = 0;
+        const images = users.map(user => user.image); // Extract all user images
 
         const spinInterval = setInterval(() => {
-            winnerImage.src = images[spinCount % images.length];
+            winnerImage.src = images[spinCount % images.length]; // Show the next image
             spinCount++;
         }, 300); // Change image every 300 ms
 
+        // After 3 seconds, stop the flip and display the final winner
         setTimeout(() => {
             clearInterval(spinInterval); // Stop the spinning
+
+            // Choose a random winner from users
+            const winnerIndex = Math.floor(Math.random() * users.length);
+            const winner = users[winnerIndex];
+
             winnerName.textContent = winner.name; // Set the winner name
             winnerImage.src = winner.image; // Set the winner's image
             chooseWinnerButton.style.display = 'block'; // Show the buttons
@@ -95,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Function to fetch and display users
+    // Function to fetch users and store them in the local variable
     async function fetchUsers() {
         try {
             const snapshot = await db.collection("users").get();
