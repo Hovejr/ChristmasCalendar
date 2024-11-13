@@ -1,12 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
     const boxContainer = document.getElementById('box-container');
-    const currentDate = document.getElementById('current-date');
-    const factBox = document.getElementById('fact-box');
     const dialog = document.getElementById('dialog');
     const winnerName = document.getElementById('winner-name');
     const winnerImage = document.getElementById('winner-image');
     const chooseWinnerButton = document.getElementById('choose-winner');
     const redrawButton = document.getElementById('redraw');
+
+    const images = [
+        'img/1.jpg',
+        'img/2.jpg',
+        'img/3.jpg'
+    ];
 
     const teamId = 1; // Example team ID
     const openedBoxes = [];
@@ -14,38 +18,52 @@ document.addEventListener('DOMContentLoaded', function () {
 
     randomizedNumbers.sort(() => Math.random() - 0.5); // Shuffle numbers
 
-    // Initialize current date
-    currentDate.textContent = `I dag er det: ${new Date().toLocaleDateString('nb-NO', { day: 'numeric', month: 'long' })}`;
+    
 
     // Create boxes
     randomizedNumbers.forEach(boxNumber => {
+        const boxWrapper = document.createElement('div');
+        boxWrapper.className = 'box-wrapper';
+
         const box = document.createElement('div');
-        box.className = 'box-wrapper';
-        box.innerHTML = `
-            <div class="box" onclick="boxClicked(${boxNumber})">${boxNumber}</div>
-        `;
-        boxContainer.appendChild(box);
+        box.className = 'box';
+        box.textContent = boxNumber;
+        boxWrapper.appendChild(box);
+
+        // Click event for the box
+        box.addEventListener('click', () => boxClicked(box, boxNumber));
+
+        boxContainer.appendChild(boxWrapper);
     });
 
-    // Fetch and display facts (simulated)
-    fetchFact();
-
-    // Function to fetch facts (this is just a simulated function)
-    function fetchFact() {
-        setTimeout(() => {
-            factBox.textContent = "This is an interesting fact!";
-        }, 2000);
-    }
 
     // Function to handle box clicks
-    window.boxClicked = function(boxNumber) {
+    window.boxClicked = function (box, boxNumber) {
         if (!openedBoxes.includes(boxNumber)) {
             openedBoxes.push(boxNumber);
-            // Simulate fetching a winner and spin between three images
-            const winner = { name: `Person ${boxNumber}`, image: '3.jpg' }; // Placeholder data
-            showWinner(winner);
+            box.classList.add('opened');
+            const boxWrapper = box.parentElement; // Get the parent element (box-wrapper)
+            rotateImages(boxWrapper); // Rotate images in the box-wrapper
+
+            setTimeout(() => {
+                const winner = { name: `Person ${boxNumber}`, image: 'img/3.jpg' }; // Mock winner data
+                showWinner(winner);
+            }, 3000);
         }
     };
+
+// Function to rotate images in the box-wrapper
+function rotateImages(boxWrapper) {
+    let imageIndex = 0;
+    const rotationInterval = setInterval(() => {
+        boxWrapper.style.backgroundImage = `url(${images[imageIndex % images.length]})`;
+        imageIndex++;
+    }, 300);
+
+    // Stop image rotation after 3 seconds
+    setTimeout(() => clearInterval(rotationInterval), 3000);
+}
+
 
     // Function to show the winner with a spinning effect
     function showWinner(winner) {
@@ -53,11 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
         winnerImage.src = ''; // Clear the image initially
 
         // Simulate the spinning effect with 3 images
-        const images = [
-            '1.jpg',
-            '2.jpg',
-            '3.jpg'
-        ];
+        
         let spinCount = 0;
 
         const spinInterval = setInterval(() => {

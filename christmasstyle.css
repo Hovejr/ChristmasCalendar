@@ -42,6 +42,9 @@
     margin: 1vw;
     border: 4px dashed #fff;
     width:20%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 /* Add a media query for when the aspect ratio of the page is such that width is greater than height */
@@ -142,7 +145,7 @@
 
 .snow_wrap {
     width: 100%;
-    background: url("bg.png");
+    background: url("img/bg.png");
     background-size: cover;
     background-position: center bottom;
     overflow: hidden;
