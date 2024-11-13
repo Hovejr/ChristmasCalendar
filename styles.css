@@ -1,16 +1,6 @@
 /* styles.css */
 @import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas&display=swap'); /* Import festive font */
 
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  background-color: #2e7d32; /* Festive green background */
-  font-family: 'Mountains of Christmas', cursive; /* Change to Mountains of Christmas font */
-}
-
 .door {
   position: relative;
   width: 100%;
