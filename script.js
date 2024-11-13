@@ -20,21 +20,26 @@ document.addEventListener('DOMContentLoaded', function () {
     const chooseWinnerButton = document.getElementById('choose-winner');
     const redrawButton = document.getElementById('redraw');
 
-    const images = [
-        'img/1.jpg',
-        'img/2.jpg',
-        'img/3.jpg'
-    ];
-
-     let users = [];
-
-    const teamId = 1; // Example team ID
+    let users = [];
     const openedBoxes = [];
-    const randomizedNumbers = [...Array(24).keys()].map(i => i + 1); // Random numbers from 1 to 24
-
-    randomizedNumbers.sort(() => Math.random() - 0.5); // Shuffle numbers
-
     
+    const seed = 2024;
+    const doors = [...Array(24).keys()].map(i => i + 1);
+     
+    const randomizedNumbers = shuffleArray(doors, seed);
+     
+    function seededRandom(seed) {
+         let x = Math.sin(seed++) * 10000;
+         return x - Math.floor(x);
+    }
+    function shuffleArray(array, seed) {
+         for (let i = array.length - 1; i > 0; i--) {
+             const j = Math.floor(seededRandom(seed) * (i + 1));
+             [array[i], array[j]] = [array[j], array[i]];
+             seed++;
+         }
+         return array;
+    }
 
     // Create boxes
     randomizedNumbers.forEach(boxNumber => {
@@ -52,56 +57,53 @@ document.addEventListener('DOMContentLoaded', function () {
         boxContainer.appendChild(boxWrapper);
     });
 
-
     // Function to handle box clicks
     window.boxClicked = function (box, boxNumber) {
+
+        alert("Redraw initiated! fdadfs"); // Placeholder for your logic
         if (!openedBoxes.includes(boxNumber)) {
             openedBoxes.push(boxNumber);
             box.classList.add('opened');
+            
             const boxWrapper = box.parentElement; // Get the parent element (box-wrapper)
             flipUsersImages(boxWrapper); // Rotate images in the box-wrapper
 
             setTimeout(() => {
                 const winnerIndex = Math.floor(Math.random() * users.length);
                 const winner = users[winnerIndex];
-                showWinner(winner);
-            }, 3000);
+                showWinner(winner, boxWrapper); // Pass the boxWrapper to update its background
+            }, 3000); // Wait for the spinning to complete before selecting a winner
         }
     };
 
     // Function to rotate images in the box-wrapper
-    function rotateImages(boxWrapper) {
-        let imageIndex = 0;
-        const rotationInterval = setInterval(() => {
-            boxWrapper.style.backgroundImage = `url(${images[imageIndex % images.length]})`;
-            imageIndex++;
-        }, 300);
-
-        // Stop image rotation after 3 seconds
-        setTimeout(() => clearInterval(rotationInterval), 3000);
-    }
-
     function flipUsersImages(boxWrapper) {
         let imageIndex = 0;
         const userImages = users.map(user => user.image); // Extract all user images
 
         const spinInterval = setInterval(() => {
-            boxWrapper.style.backgroundImage = `url(${userImages[imageIndex % userImages.length]})` // Show the next image
+            boxWrapper.style.backgroundImage = `url(${userImages[imageIndex % userImages.length]})`; // Rotate through images
+            boxWrapper.style.backgroundSize = 'cover';
+            boxWrapper.style.backgroundPosition = 'center';
             imageIndex++;
         }, 300); // Change image every 300 ms
 
-        // After 3 seconds, stop the flip and display the final winner
-        setTimeout(() => clearInterval(spinInterval), 3000); // Spin for 3 seconds
+        // After 3 seconds, stop the flip
+        setTimeout(() => clearInterval(spinInterval), 3000);
     }
 
-
     // Function to show the winner with a spinning effect
-    function showWinner(winner) {
+    function showWinner(winner, boxWrapper) {
         winnerName.textContent = winner.name; // Set the winner name
         winnerImage.src = winner.image; // Set the winner's image
         chooseWinnerButton.style.display = 'block'; // Show the choose winner button
         redrawButton.style.display = 'block'; // Show the redraw button
         dialog.style.display = 'block'; // Show the dialog
+
+        // Set the background of the clicked box to the winner's image
+        boxWrapper.style.backgroundImage = `url(${winner.image})`;
+        boxWrapper.style.backgroundSize = 'cover';
+        boxWrapper.style.backgroundPosition = 'center';
     }
 
     // Function to close the dialog
@@ -118,7 +120,23 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     redrawButton.addEventListener('click', function () {
-        alert("Redraw initiated!"); // Placeholder for your logic
+        // Get the last clicked box and its wrapper
+        const lastClickedBox = openedBoxes[openedBoxes.length - 1];
+        const lastClickedBoxWrapper = document.querySelector(`.box-wrapper:nth-child(${lastClickedBox})`);
+
+        // Reset the background image for spinning effect
+        lastClickedBoxWrapper.style.backgroundImage = ''; 
+
+        // Start spinning images again
+        flipUsersImages(lastClickedBoxWrapper);
+
+        // After the spinning animation, select a new winner
+        setTimeout(() => {
+            const newWinnerIndex = Math.floor(Math.random() * users.length);
+            const newWinner = users[newWinnerIndex];
+            showWinner(newWinner, lastClickedBoxWrapper); // Display new winner
+        }, 3000); // Match the spin duration
+
         closeDialog();
     });
 
