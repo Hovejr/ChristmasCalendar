@@ -67,27 +67,11 @@ function rotateImages(boxWrapper) {
 
     // Function to show the winner with a spinning effect
     function showWinner(winner) {
-        winnerName.textContent = "Spinning...";
-        winnerImage.src = ''; // Clear the image initially
-
-        // Simulate the spinning effect with 3 images
-        
-        let spinCount = 0;
-
-        const spinInterval = setInterval(() => {
-            winnerImage.src = images[spinCount % images.length];
-            spinCount++;
-        }, 300); // Change image every 300 ms
-
-        // After 3 seconds, show the winner
-        setTimeout(() => {
-            clearInterval(spinInterval); // Stop the spinning
-            winnerName.textContent = winner.name; // Set the winner name
+        winnerName.textContent = winner.name; // Set the winner name
             winnerImage.src = winner.image; // Set the winner's image
             chooseWinnerButton.style.display = 'block'; // Show the choose winner button
             redrawButton.style.display = 'block'; // Show the redraw button
             dialog.style.display = 'block'; // Show the dialog
-        }, 3000); // Spin for 3 seconds
     }
 
     // Function to close the dialog
