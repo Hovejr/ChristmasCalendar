@@ -10,8 +10,6 @@
     background-position: center;
 }
 
-
-
 .title {
     color: #9c0000;
     text-align: center;
@@ -142,7 +140,7 @@
 
 .snow_wrap {
     width: 100%;
-    background: url("bg.png");
+    background: url("img/bg.png");
     background-size: cover;
     background-position: center bottom;
     overflow: hidden;

@@ -6,31 +6,26 @@
     <link rel="stylesheet" href="roulettedialog.css">
     <link rel="stylesheet" href="christmasstyle.css">
     <link rel="stylesheet" href="site.css"> <!-- Your existing styles -->
-    <link href="https://fonts.googleapis.com/css?family=Mountains+of+Christmas&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css"> <!-- Your existing styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas&display=swap" rel="stylesheet">
     <title>Julekalender</title>
 </head>
 <body>
     <div id="app">
         <a href="adduser.html" class="add-user-link">Add User</a> <!-- Link to add user -->
-        <div class="calendar" style="background-image: url('bg.png');">
+        <div class="calendar" style="background-image: url('img/bg.png');">
             <div class="snow_wrap">
                 <div class="snow"></div>
             </div>
             <div class="title">Julekalender <span id="team-name">Team Name</span></div>
             <div class="box-container" id="box-container"></div>
-            <div class="footer">
-                <div class="innerfooter">
-                    <div class="date" id="current-date"></div>
-                    <div class="fact-box" id="fact-box">Loading facts...</div>
-                </div>
-            </div>
         </div>
         <div id="dialog" class="dialog">
             <div class="dialog-content">
                 <h2>Vinneren er:</h2>
                 <h1 id="winner-name">John Doe</h1>
                 <div class="winner-image-container">
-                    <img src="3.jpg" alt="Winner's Image" class="winner-image" id="winner-image" />
+                    <img src="img/3.jpg" alt="Winner's Image" class="winner-image" id="winner-image" />
                 </div>
                 <div class="button-container">
                     <button id="choose-winner" class="btn-winner">Velg vinner</button>
@@ -46,6 +41,5 @@
     <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-app-compat.js"></script>
     <!-- Add Firebase products that you want to use -->
     <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore-compat.js"></script>
-
 </body>
 </html>

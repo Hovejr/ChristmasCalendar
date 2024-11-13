@@ -75,14 +75,10 @@ a, .btn-link {
     display: block; /* Or flex, etc., depending on your styling */
 }
 
-.calendar {
-    position: relative; /* Ensure the calendar has a positioning context */
-    z-index: 1; /* Set lower than the button */
-}
 
 .add-user-link {
     position: absolute;
-    top: 20px; /* Adjust as needed */
+    bottom: 20px; /* Adjust as needed */
     right: 20px; /* Adjust as needed */
     font-size: 1.2em; /* Font size */
     color: #fff; /* Change to your preferred color */
