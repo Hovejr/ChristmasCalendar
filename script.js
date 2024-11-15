@@ -22,7 +22,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let users = [];
     const openedBoxes = [];
+    let nextBoxNumber = 1;
     
+    const today = new Date();
+    const currentDay = today.getDate(); 
+    
+
     const seed = 2024;
     const doors = [...Array(24).keys()].map(i => i + 1);
      
@@ -59,20 +64,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to handle box clicks
     window.boxClicked = function (box, boxNumber) {
-
-        alert("Redraw initiated! fdadfs"); // Placeholder for your logic
+        // Check if the box number is greater than today's date
+        if (boxNumber > currentDay) {
+            alert(`Det er ikke  ${boxNumber}. desember enda...`);
+            return;
+        }
+    
+        // Check if the clicked box is the next in the sequence
+        if (boxNumber !== nextBoxNumber) {
+            alert(`Neste luke er vell ${nextBoxNumber}? Velg den først!`);
+            return;
+        }
+    
+        // Check if the box is already opened
         if (!openedBoxes.includes(boxNumber)) {
             openedBoxes.push(boxNumber);
             box.classList.add('opened');
-            
+    
             const boxWrapper = box.parentElement; // Get the parent element (box-wrapper)
             flipUsersImages(boxWrapper); // Rotate images in the box-wrapper
-
+    
             setTimeout(() => {
                 const winnerIndex = Math.floor(Math.random() * users.length);
                 const winner = users[winnerIndex];
-                showWinner(winner, boxWrapper); // Pass the boxWrapper to update its background
-            }, 3000); // Wait for the spinning to complete before selecting a winner
+                showWinner(winner, boxWrapper);
+    
+                // Update the next box number after the winner is chosen
+                nextBoxNumber++;
+            }, 3000);
         }
     };
 
