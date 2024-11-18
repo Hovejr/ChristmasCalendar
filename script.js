@@ -134,7 +134,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Event listeners for buttons in the dialog
     chooseWinnerButton.addEventListener('click', function () {
-        alert("Winner chosen!"); // Placeholder for your logic
         closeDialog();
     });
 
