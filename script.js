@@ -138,25 +138,32 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     redrawButton.addEventListener('click', function () {
-        // Get the last clicked box and its wrapper
-        const lastClickedBox = openedBoxes[openedBoxes.length - 1];
-        const lastClickedBoxWrapper = document.querySelector(`.box-wrapper:nth-child(${lastClickedBox})`);
-
-        // Reset the background image for spinning effect
-        lastClickedBoxWrapper.style.backgroundImage = ''; 
-
-        // Start spinning images again
-        flipUsersImages(lastClickedBoxWrapper);
-
-        // After the spinning animation, select a new winner
-        setTimeout(() => {
-            const newWinnerIndex = Math.floor(Math.random() * users.length);
-            const newWinner = users[newWinnerIndex];
-            showWinner(newWinner, lastClickedBoxWrapper); // Display new winner
-        }, 3000); // Match the spin duration
-
+        // Get the last opened box number
+        const lastClickedBoxNumber = openedBoxes[openedBoxes.length - 1];
+    
+        // Use a selector to find the box-wrapper containing the correct box number
+        const lastClickedBoxWrapper = [...document.querySelectorAll('.box-wrapper')].find(wrapper => {
+            return wrapper.querySelector('.box').textContent == lastClickedBoxNumber;
+        });
+    
+        if (lastClickedBoxWrapper) {
+            // Reset the background image for spinning effect
+            lastClickedBoxWrapper.style.backgroundImage = ''; 
+    
+            // Start spinning images again
+            flipUsersImages(lastClickedBoxWrapper);
+    
+            // After the spinning animation, select a new winner
+            setTimeout(() => {
+                const newWinnerIndex = Math.floor(Math.random() * users.length);
+                const newWinner = users[newWinnerIndex];
+                showWinner(newWinner, lastClickedBoxWrapper); // Display new winner
+            }, 3000); // Match the spin duration
+        }
+    
         closeDialog();
     });
+    
 
     // Function to fetch and display users
     async function fetchUsers() {
