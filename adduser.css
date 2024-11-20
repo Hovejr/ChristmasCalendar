@@ -88,3 +88,34 @@ button:hover {
 .back-button:hover {
     background-color: #0056b3; /* Darker shade on hover */
 }
+
+
+
+#crop-overlay {
+    display: none;
+    position: relative;
+    width: 40vw;
+    height: 40vh;
+    background-color:green;
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+#crop-container {
+    background: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    max-width: 90%;
+    max-height: 90%;
+    text-align: center;
+}
+
+#cropped-preview {
+    max-width: 8vw;
+    margin-top: 20px;
+}
+
+.hidden {
+    display: none;
+}
