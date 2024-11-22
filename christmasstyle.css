@@ -144,7 +144,6 @@
 
 .snow_wrap {
     width: 100%;
-    background: url("img/bg.png");
     background-size: cover;
     background-position: center bottom;
     overflow: hidden;
